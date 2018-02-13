@@ -14,12 +14,13 @@ This repo is maintained by [Tianye Li](https://sites.google.com/site/tianyefocus
 
 ### Dependencies
 
-This code uses Python 3.5 and need the following dependencies:
+This code uses Python 2.7 and 3.5+ and need the following dependencies:
 
 - [numpy & scipy](http://www.scipy.org/scipylib/download.html)
 - [opencv](http://opencv.org/)
-- ~~[chumpy](https://github.com/mattloper/chumpy)~~
-- [chumpy](https://github.com/homier/chumpy)
+- chumpu
+  - Python 2.x [chumpy](https://github.com/mattloper/chumpy)
+  - Python 3.x [chumpy](https://github.com/homier/chumpy)
 
 ### Set-up
 
@@ -51,12 +52,19 @@ and run:
 $ source ~/.bash_profile
 ```
 
-To install numpy, scipy and chumpy:
+To install numpy, scipy:
 ```
 $ pip install numpy
 $ pip install scipy
 ```
 
+To install chumpy
+* **Python 2.x**: 
+```
+$ pip install chumpy
+```
+
+* **Python 3.x**:
 Chumpy does not yet support python3. Forks exist that have partial compatiblity with Python3. This branch uses a python3 compatible Chumpy [fork](https://github.com/homier/chumpy/tree/py3). Follow below steps to setup your python to use this version of Chumpy.
 
 ```
@@ -75,7 +83,7 @@ $ deactivate
 This is a Python3 compatible branch. Extra steps are neccesary to setup.
 
 Still need to iron out backwards compatibility
-- [ ] `pickle.load` doesn't have an encoding parameter
+- [X] function `pickle.load` doesn't have an encoding parameter in python 2.x
 - [ ] Test Saving and Loading pickle files between python versions
   - Issues with encoding likely...
 
