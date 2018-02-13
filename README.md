@@ -83,7 +83,7 @@ $ deactivate
 This is a Python3 compatible branch. Extra steps are neccesary to setup.
 
 Still need to iron out backwards compatibility
-- [X] function `pickle.load` doesn't have an encoding parameter in python 2.x
+- [X] Function `pickle.load` doesn't have an *encoding* parameter in python 2.x
 - [ ] Test Saving and Loading pickle files between python versions
   - Issues with encoding likely...
 
