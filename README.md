@@ -1,4 +1,4 @@
-# FLAME Face Model
+# FLAME Face Model (Python 3.x Compatible)
 
 This codebase demonstrates how to load and play with FLAME, a lightweight and expressive generic face model to be presented in:
 
@@ -14,11 +14,12 @@ This repo is maintained by [Tianye Li](https://sites.google.com/site/tianyefocus
 
 ### Dependencies
 
-This code uses Python 2.7 and need the following dependencies:
+This code uses Python 3.5 and need the following dependencies:
 
 - [numpy & scipy](http://www.scipy.org/scipylib/download.html)
 - [opencv](http://opencv.org/)
-- [chumpy](https://github.com/mattloper/chumpy)
+- ~~[chumpy](https://github.com/mattloper/chumpy)~~
+- [chumpy](https://github.com/homier/chumpy)
 
 ### Set-up
 
@@ -54,12 +55,29 @@ To install numpy, scipy and chumpy:
 ```
 $ pip install numpy
 $ pip install scipy
-$ pip install chumpy
 ```
+
+Chumpy does not yet support python3. Forks exist that have partial compatiblity with Python3. This branch uses a python3 compatible Chumpy [fork](https://github.com/homier/chumpy/tree/py3). Follow below steps to setup your python to use this version of Chumpy.
+
+```
+$ git clone https://github.com/homier/chumpy.git
+$ cd /path/to/py3_chumpy
+$ git checkout py3
+$ pip install .
+```
+  
 To deactivate the virtual environment:
 ```
 $ deactivate
 ```
+
+### NOTICE: Python 3.x Support 
+This is a Python3 compatible branch. Extra steps are neccesary to setup.
+
+Still need to iron out backwards compatibility
+- [ ] `pickle.load` doesn't have an encoding parameter
+- [ ] Test Saving and Loading pickle files between python versions
+  - Issues with encoding likely...
 
 ### Demo
 
