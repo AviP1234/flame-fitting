@@ -47,6 +47,8 @@ the hello world script now by typing the following:
 
 '''
 
+from __future__ import print_function
+
 import numpy as np
 from opendr.renderer import ColoredRenderer
 from opendr.lighting import LambertianPointLight
@@ -84,7 +86,7 @@ rn.vc = LambertianPointLight(
 ## Show it using OpenCV
 import cv2
 cv2.imwrite( "./test.png", rn.r )
-print 'image saved'
+print('image saved')
 
 # cv2.imshow('render_SMPL', rn.r)
 # print ('..Print any key while on the display window')

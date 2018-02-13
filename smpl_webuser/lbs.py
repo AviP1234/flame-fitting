@@ -20,7 +20,12 @@ Modules included:
 
 '''
 
-from posemapper import posemap
+#problem importing with python3
+try:
+    from posemapper import posemap
+except ImportError:
+    from .posemapper import posemap
+
 import chumpy
 import numpy as np
 
@@ -31,7 +36,10 @@ def global_rigid_transformation(pose, J, kintree_table, xp):
     parent = {i : id_to_col[kintree_table[0,i]] for i in range(1, kintree_table.shape[1])}
 
     if xp == chumpy:
-        from posemapper import Rodrigues
+        try:
+            from posemapper import Rodrigues
+        except ImportError:
+            from .posemapper import Rodrigues
         rodrigues = lambda x : Rodrigues(x)
     else:
         import cv2

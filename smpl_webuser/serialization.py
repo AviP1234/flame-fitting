@@ -23,11 +23,24 @@ Modules included:
 __all__ = ['load_model', 'save_model']
 
 import numpy as np
-import cPickle as pickle
+try:
+    import cPickle as pickle
+except ImportError:
+    import pickle
 import chumpy as ch
 from chumpy.ch import MatVecMult
-from posemapper import posemap
-from verts import verts_core
+
+#problem importing with python3
+from io import open
+try:
+    from posemapper import posemap
+except ImportError:
+    from .posemapper import posemap
+
+try:
+    from verts import verts_core
+except ImportError:
+    from .verts import verts_core
     
 def save_model(model, fname):
     m0 = model
@@ -46,7 +59,9 @@ def save_model(model, fname):
         trainer_dict['bs_style'] = model.bs_style
     else:
         trainer_dict['bs_style'] = 'lbs'
-    pickle.dump(trainer_dict, open(fname, 'w'), -1)
+
+    with open(fname, 'wb') as ofstream:
+        pickle.dump(trainer_dict, ofstream, -1)
 
 
 def backwards_compatibility_replacements(dd):
@@ -73,11 +88,13 @@ def backwards_compatibility_replacements(dd):
         dd['bs_style'] = 'lbs'
 
 
-
 def ready_arguments(fname_or_dict):
 
     if not isinstance(fname_or_dict, dict):
-        dd = pickle.load(open(fname_or_dict))
+        with open(fname_or_dict, 'rb') as ifstream:
+            dd = pickle.load(ifstream, encoding='latin1')
+        #with open(fname_or_dict, encoding='utf-8') as ifstream:
+        #    dd = pickle.load(ifstream)
     else:
         dd = fname_or_dict
         

@@ -5,6 +5,8 @@ Based on the hello-world script from SMPL python code
 http://smpl.is.tue.mpg.de/downloads
 '''
 
+from __future__ import print_function
+
 import numpy as np
 from os.path import join
 from smpl_webuser.serialization import load_model
@@ -18,19 +20,19 @@ if __name__ == '__main__':
     # Make sure path is correct
     model_path = './models/female_model.pkl'
     model = load_model( model_path )           # the loaded model object is a 'chumpy' object, check https://github.com/mattloper/chumpy for details
-    print "loaded model from:", model_path
+    print("loaded model from:", model_path)
 
     # Show component number
-    print "\nFLAME coefficients:"
-    print "shape (identity) coefficient shape =", model.betas[0:300].shape # valid shape component range in "betas": 0-299
-    print "expression coefficient shape       =", model.betas[300:].shape  # valid expression component range in "betas": 300-399
-    print "pose coefficient shape             =", model.pose.shape
+    print("\nFLAME coefficients:")
+    print("shape (identity) coefficient shape =", model.betas[0:300].shape) # valid shape component range in "betas": 0-299
+    print("expression coefficient shape       =", model.betas[300:].shape) # valid expression component range in "betas": 300-399
+    print("pose coefficient shape             =", model.pose.shape)
 
-    print "\nFLAME model components:"
-    print "shape (identity) component shape =", model.shapedirs[:,:,0:300].shape
-    print "expression component shape       =", model.shapedirs[:,:,300:].shape
-    print "pose corrective blendshape shape =", model.posedirs.shape
-    print ""
+    print("\nFLAME model components:")
+    print("shape (identity) component shape =", model.shapedirs[:,:,0:300].shape)
+    print("expression component shape       =", model.shapedirs[:,:,300:].shape)
+    print("pose corrective blendshape shape =", model.posedirs.shape)
+    print("")
 
     # -----------------------------------------------------------------------------
 
@@ -46,5 +48,5 @@ if __name__ == '__main__':
     write_simple_obj( mesh_v=model.r, mesh_f=model.f, filepath=outmesh_path )
 
     # Print message
-    print 'output mesh saved to: ', outmesh_path 
+    print('output mesh saved to: ', outmesh_path)
 

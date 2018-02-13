@@ -22,8 +22,22 @@ Modules included:
 '''
 
 import chumpy
-import lbs
-from posemapper import posemap
+
+#problem importing with python3
+try:
+    #Python2
+    from posemapper import posemap
+except ImportError:
+    #Python3
+    from .posemapper import posemap
+
+try:
+    #Python2
+    import lbs
+except ImportError:
+    #Python3
+    from smpl_webuser import lbs
+
 import scipy.sparse as sp
 from chumpy.ch import MatVecMult
 

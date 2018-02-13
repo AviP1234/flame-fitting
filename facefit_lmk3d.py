@@ -3,6 +3,8 @@ demo: fit FLAME face model to 3D landmarks
 Tianye Li <tianye.li@tuebingen.mpg.de>
 '''
 
+from __future__ import print_function
+
 import numpy as np
 import chumpy as ch
 from os.path import join
@@ -44,9 +46,9 @@ def fit_lmk3d( lmk_3d,                      # input landmark 3d
     free_variables = [ model.trans, model.pose, model.betas[used_idx] ] 
     
     # weights
-    print "fit_lmk3d(): use the following weights:"
+    print("fit_lmk3d(): use the following weights:")
     for kk in weights.keys():
-        print "fit_lmk3d(): weights['%s'] = %f" % ( kk, weights[kk] ) 
+        print("fit_lmk3d(): weights['%s'] = %f" % ( kk, weights[kk] ))
 
     # objectives
     # lmk
@@ -65,7 +67,7 @@ def fit_lmk3d( lmk_3d,                      # input landmark 3d
 
     # options
     if opt_options is None:
-        print "fit_lmk3d(): no 'opt_options' provided, use default settings."
+        print("fit_lmk3d(): no 'opt_options' provided, use default settings.")
         import scipy.sparse as sp
         opt_options = {}
         opt_options['disp']    = 1
@@ -83,25 +85,25 @@ def fit_lmk3d( lmk_3d,                      # input landmark 3d
     # step 1: rigid alignment
     from time import time
     timer_start = time()
-    print "\nstep 1: start rigid fitting..."    
+    print("\nstep 1: start rigid fitting...")
     ch.minimize( fun      = lmk_err,
                  x0       = [ model.trans, model.pose[0:3] ],
                  method   = 'dogleg',
                  callback = on_step,
                  options  = opt_options )
     timer_end = time()
-    print "step 1: fitting done, in %f sec\n" % ( timer_end - timer_start )
+    print("step 1: fitting done, in %f sec\n" % ( timer_end - timer_start ))
 
     # step 2: non-rigid alignment
     timer_start = time()
-    print "step 2: start non-rigid fitting..."    
+    print("step 2: start non-rigid fitting...")
     ch.minimize( fun      = objectives,
                  x0       = free_variables,
                  method   = 'dogleg',
                  callback = on_step,
                  options  = opt_options )
     timer_end = time()
-    print "step 2: fitting done, in %f sec\n" % ( timer_end - timer_start )
+    print("step 2: fitting done, in %f sec\n" % ( timer_end - timer_start ))
 
     # return results
     parms = { 'trans': model.trans.r, 'pose': model.pose.r, 'betas': model.betas.r }
@@ -114,17 +116,17 @@ def run_fitting():
     # input landmarks
     lmk_path = './data/landmark_3d.pkl'
     lmk_3d = load_binary_pickle( lmk_path )
-    print "loaded 3d landmark from:", lmk_path
+    print("loaded 3d landmark from:", lmk_path)
 
     # model
     model_path = './models/male_model.pkl' # change to 'female_model.pkl' or 'generic_model.pkl', if needed
     model = load_model( model_path )       # the loaded model object is a 'chumpy' object, check https://github.com/mattloper/chumpy for details
-    print "loaded model from:", model_path
+    print("loaded model from:", model_path)
 
     # landmark embedding
     lmk_emb_path = './data/lmk_embedding_intraface_to_flame.pkl' 
     lmk_face_idx, lmk_b_coords = load_embedding( lmk_emb_path )
-    print "loaded lmk embedding"
+    print("loaded lmk embedding")
 
     # output
     output_dir = './output'
