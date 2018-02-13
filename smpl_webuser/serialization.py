@@ -22,6 +22,7 @@ Modules included:
 
 __all__ = ['load_model', 'save_model']
 
+import sys
 import numpy as np
 try:
     import cPickle as pickle
@@ -92,9 +93,8 @@ def ready_arguments(fname_or_dict):
 
     if not isinstance(fname_or_dict, dict):
         with open(fname_or_dict, 'rb') as ifstream:
-            dd = pickle.load(ifstream, encoding='latin1')
-        #with open(fname_or_dict, encoding='utf-8') as ifstream:
-        #    dd = pickle.load(ifstream)
+            pickle_options = {'encoding': 'latin1'} if sys.version_info[0] == 3 else {}
+            dd = pickle.load(ifstream, **pickle_options)
     else:
         dd = fname_or_dict
         

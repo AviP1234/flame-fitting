@@ -6,6 +6,7 @@ Tianye Li <tianye.li@tuebingen.mpg.de>
 from __future__ import print_function
 
 import os
+import sys
 import numpy as np
 try:
     import cPickle as pickle
@@ -16,7 +17,8 @@ except ImportError:
 
 def load_binary_pickle( filepath ):
     with open( filepath, 'rb' ) as f:
-        data = pickle.load( f, encoding="latin1" )
+        pickle_options = {'encoding': 'latin1'} if sys.version_info[0] == 3 else {}
+        data = pickle.load( f, **pickle_options )
     return data
 
 # -----------------------------------------------------------------------------
