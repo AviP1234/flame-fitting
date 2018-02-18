@@ -18,7 +18,7 @@ This code uses Python 2.7 and 3.5+ and need the following dependencies:
 
 - [numpy & scipy](http://www.scipy.org/scipylib/download.html)
 - [opencv](http://opencv.org/)
-- chumpu
+- chumpy
   - Python 2.x [chumpy](https://github.com/mattloper/chumpy)
   - Python 3.x [chumpy](https://github.com/homier/chumpy)
 
