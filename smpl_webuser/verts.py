@@ -36,7 +36,7 @@ try:
     import lbs
 except ImportError:
     #Python3
-    from smpl_webuser import lbs
+    from . import lbs
 
 import scipy.sparse as sp
 from chumpy.ch import MatVecMult
