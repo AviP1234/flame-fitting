@@ -5,15 +5,33 @@ Tianye Li <tianye.li@tuebingen.mpg.de>
 
 from __future__ import print_function
 
+import argparse
 import numpy as np
 import chumpy as ch
-from os.path import join
+from os.path import join, isfile
 
 from smpl_webuser.serialization import load_model
 from fitting.landmarks import load_embedding, landmark_error_3d
 from fitting.util import load_binary_pickle, write_simple_obj, safe_mkdir
 
 # -----------------------------------------------------------------------------
+
+TEST_LMK_PATH = './data/landmark_3d.pkl'
+
+
+def get_arguments():
+    """Parse all the arguments provided from the CLI.
+
+    Returns:
+      A list of parsed arguments.
+    """
+    parser = argparse.ArgumentParser(description="FLAME Model fitting.")
+    parser.add_argument("--lmks", type=str,
+                        help="Path to 3D landmarks file, in csv format. Default uses a test file")
+    return parser.parse_args()
+
+# -----------------------------------------------------------------------------
+
 
 def fit_lmk3d( lmk_3d,                      # input landmark 3d
                model,                       # model
@@ -111,12 +129,8 @@ def fit_lmk3d( lmk_3d,                      # input landmark 3d
 
 # -----------------------------------------------------------------------------
 
-def run_fitting():
 
-    # input landmarks
-    lmk_path = './data/landmark_3d.pkl'
-    lmk_3d = load_binary_pickle( lmk_path )
-    print("loaded 3d landmark from:", lmk_path)
+def run_fitting(lmk_3d):
 
     # model
     model_path = './models/male_model.pkl' # change to 'female_model.pkl' or 'generic_model.pkl', if needed
@@ -162,7 +176,30 @@ def run_fitting():
 
 # -----------------------------------------------------------------------------
 
+
+def main():
+    args = get_arguments()
+
+    # input landmarks
+    if args.lmks is not None:
+        if not isfile(args.lmks):
+            print("File not found: {}".format(args.lmks))
+            exit(-1)
+
+        lmk_path = args.lmks
+        lmk_3d = np.genfromtxt(args.lmks, delimiter=',')
+    else:
+        lmk_path = TEST_LMK_PATH
+        lmk_3d = load_binary_pickle(TEST_LMK_PATH)
+
+    print("loaded 3d landmark from:", lmk_path)
+
+    run_fitting(lmk_3d)
+
+# -----------------------------------------------------------------------------
+
+
 if __name__ == '__main__':
 
-    run_fitting()
+    main()
 
